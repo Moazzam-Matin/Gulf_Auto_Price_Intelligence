@@ -20,6 +20,13 @@ This project focuses on the "Predictable Market" segment (cars priced ≤ 400,00
 
 ---
 
+## 📊 Data Source
+
+The model is trained on a dataset of over 10,000 used car listings from the UAE/Gulf market.
+
+- **Source:** [https://www.kaggle.com/datasets/aliiihussain/car-price-prediction/data]
+- **Features:** Make, Model, Year, Mileage, Region (GCC/Import), and Price.
+
 ## 🛠️ Data Science Workflow
 
 ### 1. Feature Engineering: The "Log-Log" Approach
@@ -88,3 +95,8 @@ To contribute to this project, please set up your local environment using these 
 git clone [https://github.com/Moazzam-Matin/Gulf_Auto_Price_Intelligence.git](https://github.com/Moazzam-Matin/Gulf_Auto_Price_Intelligence.git)
 cd Gulf_Auto_Price_Intelligence
 ```
+
+## 👏 Acknowledgements
+
+- A huge thank you to the **Kaggle community** for providing the raw UAE car market dataset that made this project possible.
+- Special thanks to the contributors and open-source developers whose libraries (Scikit-Learn, Pandas, Joblib) power this engine.
