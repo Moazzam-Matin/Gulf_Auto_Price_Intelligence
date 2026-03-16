@@ -1,4 +1,11 @@
+# Environments
+venv/
+
+# Python artifacts
 __pycache__/
+*.pyc
 .ipynb_checkpoints/
+
+# Data and Secrets
 *.csv
 .env
