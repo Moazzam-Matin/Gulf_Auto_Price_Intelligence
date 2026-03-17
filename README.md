@@ -82,7 +82,7 @@ This project is the foundation for a suite of automotive intelligence tools. The
 ### Phase 3: Deployment & Productization
 
 - **Real-Time API:** Wrap `engine.py` in a **FastAPI** container to allow external websites to request price audits.
-- **Web Dashboard:** Build a Streamlit or React frontend for A&M Operations that visualizes depreciation curves for users.
+- **Web Dashboard:** Build a Streamlit or React frontend  that visualizes depreciation curves for users.
 - **Automated Retraining:** Set up a GitHub Action to retrain the model monthly as new UAE market data becomes available.
 
 ## 🛠️ Setup for Contributors
