@@ -24,7 +24,7 @@ This project focuses on the "Predictable Market" segment (cars priced ≤ 400,00
 
 The model is trained on a dataset of over 10,000 used car listings from the UAE/Gulf market.
 
-- **Source:** [https://www.kaggle.com/datasets/aliiihussain/car-price-prediction/data]
+- **Source:** [[https://www.kaggle.com/datasets/aliiihussain/car-price-prediction/data](https://www.kaggle.com/datasets/mohamedsaad254/uae-used-cars-analysis-full-project-v1-0)]
 - **Features:** Make, Model, Year, Mileage, Region (GCC/Import), and Price.
 
 ## 🛠️ Data Science Workflow
