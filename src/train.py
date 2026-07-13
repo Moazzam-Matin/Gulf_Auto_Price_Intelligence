@@ -13,7 +13,7 @@ from sklearn.metrics import (
 )
 
 from src.features import load_raw_data
-from src.preprocess import preprocess
+from src.preprocess import clean_data, fit_target_encoding, apply_target_encoding
 
 # ── Configuration ──────────────────────────────────────────
 DATA_PATH = "data/raw/uae_used_cars_10k.csv"
@@ -31,34 +31,41 @@ TARGET = "Log_Price"
 PRICE_CAP = 400000
 
 # Model parameters
-N_ESTIMATORS = 100
-MAX_DEPTH = 10
+N_ESTIMATORS = 90
+MAX_DEPTH = 9
 RANDOM_STATE = 42
 TEST_SIZE = 0.2
 
 
 def train():
-    # 1. Load and preprocess
+    # 1. Load and clean (no leakage risk in cleaning)
     df = load_raw_data(DATA_PATH)
-    df = preprocess(df)
+    df = clean_data(df)
 
     # 2. Filter to standard market (remove luxury outliers)
     df = df[df["Price"] <= PRICE_CAP].copy()
     print(f"✅ Market filtered: {len(df)} cars under {PRICE_CAP:,} AED")
 
-    # 3. Prepare features and target
-    X = df[FEATURES]
-    y = df[TARGET]
-
-    # 4. Split data
-    X_train, X_test, y_train, y_test = train_test_split(
-        X, y,
+    # 3. Split FIRST - before anything learns from the data
+    train_df, test_df = train_test_split(
+        df,
         test_size=TEST_SIZE,
         random_state=RANDOM_STATE
     )
-    print(f"✅ Train size: {len(X_train)}, Test size: {len(X_test)}")
+    print(f"✅ Train size: {len(train_df)}, Test size: {len(test_df)}")
 
-    # 5. MLflow tracking
+    # 4. Fit encoding on TRAIN ONLY, then apply to both
+    categorical_cols = ["Make", "Model", "Body Type"]
+    encoding_mappings = fit_target_encoding(train_df, categorical_cols, alpha=10)
+
+    train_df = apply_target_encoding(train_df, categorical_cols, encoding_mappings)
+    test_df = apply_target_encoding(test_df, categorical_cols, encoding_mappings)
+
+    # 5. Now assemble X/y from the already-encoded frames
+    X_train, y_train = train_df[FEATURES], train_df[TARGET]
+    X_test, y_test = test_df[FEATURES], test_df[TARGET]
+
+    # 6. MLflow tracking
     mlflow.set_experiment("gulf-auto-price")
 
     with mlflow.start_run():
@@ -88,6 +95,7 @@ def train():
         mlflow.log_param("max_depth", MAX_DEPTH)
         mlflow.log_param("price_cap", PRICE_CAP)
         mlflow.log_param("features", FEATURES)
+        mlflow.log_param("encoding_alpha", 10)
 
         # Log metrics to MLflow
         mlflow.log_metric("r2_score", r2)
