@@ -9,3 +9,7 @@ __pycache__/
 # Data and Secrets
 *.csv
 .env
+
+# MLflow artifacts - too large for GitHub
+mlruns/
+mlflow.db
