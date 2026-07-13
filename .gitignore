@@ -13,3 +13,6 @@ __pycache__/
 # MLflow artifacts - too large for GitHub
 mlruns/
 mlflow.db
+
+# Model artifacts - regenerate locally via train.py, don't commit binaries
+*.pkl

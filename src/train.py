@@ -2,6 +2,7 @@ import sys
 sys.path.insert(0, ".")
 
 import numpy as np
+import pickle
 import mlflow
 import mlflow.sklearn
 from sklearn.ensemble import RandomForestRegressor
@@ -104,6 +105,14 @@ def train():
 
         # Save the model
         mlflow.sklearn.log_model(model, name="random-forest-model")
+
+        # Also save a plain copy for the API to load directly
+        
+        with open("model.pkl", "wb") as f:
+            pickle.dump(model, f)
+        with open("encoding_mappings.pkl", "wb") as f:
+            pickle.dump(encoding_mappings, f)
+        print("✅ Saved model.pkl and encoding_mappings.pkl for serving")
 
         print(f"\n── Results ───────────────────────")
         print(f"✅ R2 Score:  {r2:.4f}")
