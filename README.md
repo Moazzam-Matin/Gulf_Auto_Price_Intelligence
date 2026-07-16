@@ -1,6 +1,6 @@
 ![CI](https://github.com/Moazzam-Matin/Gulf_Auto_Price_Intelligence/actions/workflows/ci.yml/badge.svg)
 
-# Gulf Auto Price Intelligence 🚗💨
+# Gulf Auto Price Intelligence 🚗
 
 An end-to-end MLOps pipeline that predicts used car prices in the UAE market — from raw data to a containerized, CI-tested prediction API.
 
@@ -18,25 +18,26 @@ See it running under the [Actions tab](https://github.com/Moazzam-Matin/Gulf_Aut
 
 ## Architecture
 
+```text
 Raw CSV (UAE car listings)
-&nbsp;&nbsp;&nbsp;&nbsp;│
-&nbsp;&nbsp;&nbsp;&nbsp;▼
-**clean_data()** — handles dirty data (e.g. `'Unknown'` cylinder values)
-&nbsp;&nbsp;&nbsp;&nbsp;│
-&nbsp;&nbsp;&nbsp;&nbsp;▼
-**train_test_split()** — split BEFORE encoding, to avoid leakage
-&nbsp;&nbsp;&nbsp;&nbsp;│
-&nbsp;&nbsp;&nbsp;&nbsp;├── **fit_target_encoding()** — learned only from train
-&nbsp;&nbsp;&nbsp;&nbsp;└── **apply_target_encoding()** — applied to train and test
-&nbsp;&nbsp;&nbsp;&nbsp;│
-&nbsp;&nbsp;&nbsp;&nbsp;▼
-**RandomForestRegressor** — tracked via MLflow (params, metrics, model registry)
-&nbsp;&nbsp;&nbsp;&nbsp;│
-&nbsp;&nbsp;&nbsp;&nbsp;▼
-**FastAPI `/predict`** — Pydantic-validated input, served over HTTP
-&nbsp;&nbsp;&nbsp;&nbsp;│
-&nbsp;&nbsp;&nbsp;&nbsp;▼
-**Docker container** — built and verified in CI
+    │
+    ▼
+clean_data() — handles dirty data (e.g. 'Unknown' cylinder values)
+    │
+    ▼
+train_test_split() — split BEFORE encoding, to avoid leakage
+    │
+    ├── fit_target_encoding() — learned only from train
+    └── apply_target_encoding() — applied to train and test
+    │
+    ▼
+RandomForestRegressor — tracked via MLflow (params, metrics, model registry)
+    │
+    ▼
+FastAPI /predict — Pydantic-validated input, served over HTTP
+    │
+    ▼
+Docker container — built and verified in CI
 
 ## A Real Bug I Found and Fixed: Target Leakage
 
@@ -49,21 +50,23 @@ This is documented here deliberately: catching and fixing this kind of bug — a
 ## Project Structure
 
 ```
-├── research.ipynb        # The "lab": EDA, residual analysis, initial model exploration
+
+├── research.ipynb # The "lab": EDA, residual analysis, initial model exploration
 ├── src/
-│   ├── features.py       # Data loading
-│   ├── preprocess.py     # Cleaning + leakage-safe target encoding
-│   ├── train.py          # MLflow-tracked training
-│   ├── predict.py        # Inference logic (shared feature schema with training)
-│   └── api.py             # FastAPI service
+│ ├── features.py # Data loading
+│ ├── preprocess.py # Cleaning + leakage-safe target encoding
+│ ├── train.py # MLflow-tracked training
+│ ├── predict.py # Inference logic (shared feature schema with training)
+│ └── api.py # FastAPI service
 ├── tests/
-│   └── test_preprocess.py # Includes the leakage regression test
+│ └── test_preprocess.py # Includes the leakage regression test
 ├── data/raw/
-│   └── sample_ci_data.csv # Small synthetic dataset used only by CI (real data is gitignored)
+│ └── sample_ci_data.csv # Small synthetic dataset used only by CI (real data is gitignored)
 ├── .github/workflows/
-│   └── ci.yml              # Test + Docker build pipeline
+│ └── ci.yml # Test + Docker build pipeline
 ├── Dockerfile
 └── requirements.txt
+
 ```
 
 **Research vs. production:** `research.ipynb` is where the original exploration happened - data cleaning experiments, visualizations, and the residual analysis that surfaced the "Spec Ceiling" finding (missing GCC/Import spec data as the main driver of remaining error). Everything in `src/` is the productionized version of that research: the same modeling decisions, rebuilt as tested, tracked, servable code. Keeping both visible - rather than deleting the notebook once "real" code existed - is deliberate: it shows the reasoning trail from exploration to production, not just the end result.
@@ -82,33 +85,43 @@ This is documented here deliberately: catching and fixing this kind of bug — a
 Setup:
 
 ```
+
 python -m venv venv
 source venv/Scripts/activate
 pip install -r requirements.txt
+
 ```
 
 Train (uses `data/raw/uae_used_cars_10k.csv` — see Data Source below):
 
 ```
+
 python src/train.py
+
 ```
 
 View experiments:
 
 ```
+
 mlflow ui
+
 ```
 
 Run tests:
 
 ```
+
 pytest tests/ -v
+
 ```
 
 Start the API:
 
 ```
+
 uvicorn src.api:app --reload
+
 ```
 
 Then open `http://127.0.0.1:8000/docs`.
@@ -136,3 +149,4 @@ Performance varies significantly by price segment — error as a percentage is m
 ## Acknowledgements
 
 Thanks to the Kaggle community for the UAE market dataset.
+```
