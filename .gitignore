@@ -10,6 +10,9 @@ __pycache__/
 *.csv
 .env
 
+# Exception: small synthetic dataset for CI testing only (not real data)
+!data/raw/sample_ci_data.csv
+
 # MLflow artifacts - too large for GitHub
 mlruns/
 mlflow.db

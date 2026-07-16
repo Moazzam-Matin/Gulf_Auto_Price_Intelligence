@@ -1,4 +1,5 @@
 import sys
+import os
 sys.path.insert(0, ".")
 
 import numpy as np
@@ -17,7 +18,7 @@ from src.features import load_raw_data
 from src.preprocess import clean_data, fit_target_encoding, apply_target_encoding
 
 # ── Configuration ──────────────────────────────────────────
-DATA_PATH = "data/raw/uae_used_cars_10k.csv"
+DATA_PATH = os.environ.get("DATA_PATH", "data/raw/uae_used_cars_10k.csv")
 
 FEATURES = [
     "Car_Age",

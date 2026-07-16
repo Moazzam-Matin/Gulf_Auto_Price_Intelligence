@@ -1,0 +1,31 @@
+Make,Model,Year,Price,Mileage,Body Type,Cylinders,Transmission,Fuel Type,Color,Location,Description
+toyota,camry,2019,45000,60000,Sedan,4,Automatic,Petrol,White,Dubai,Clean car
+toyota,camry,2020,52000,40000,Sedan,4,Automatic,Petrol,Black,Dubai,Well maintained
+toyota,corolla,2018,32000,80000,Sedan,4,Automatic,Petrol,Silver,Abu Dhabi,Good condition
+nissan,altima,2019,38000,55000,Sedan,4,Automatic,Petrol,White,Sharjah,Single owner
+nissan,patrol,2020,180000,30000,SUV,8,Automatic,Petrol,Black,Dubai,GCC spec
+kia,sportage,2019,55000,45000,SUV,4,Automatic,Petrol,Red,Dubai,Full option
+kia,sportage,2021,68000,20000,SUV,4,Automatic,Petrol,White,Dubai,Like new
+hyundai,elantra,2018,28000,90000,Sedan,4,Automatic,Petrol,Grey,Abu Dhabi,Accident free
+hyundai,tucson,2020,72000,35000,SUV,4,Automatic,Petrol,Black,Dubai,Agency serviced
+honda,civic,2019,42000,50000,Sedan,4,Automatic,Petrol,White,Sharjah,Good condition
+honda,accord,2020,58000,38000,Sedan,4,Automatic,Petrol,Silver,Dubai,Well kept
+lexus,es,2019,95000,42000,Sedan,6,Automatic,Petrol,Black,Dubai,Luxury spec
+lexus,rx,2020,165000,25000,SUV,6,Automatic,Petrol,White,Dubai,Full option
+mercedes,c-class,2019,120000,40000,Sedan,4,Automatic,Petrol,Black,Dubai,GCC spec
+bmw,3-series,2019,110000,45000,Sedan,4,Automatic,Petrol,White,Dubai,Clean title
+ford,explorer,2019,85000,55000,SUV,6,Automatic,Petrol,Grey,Dubai,Good condition
+chevrolet,tahoe,2018,95000,70000,SUV,8,Automatic,Petrol,Black,Abu Dhabi,GCC spec
+mitsubishi,pajero,2019,62000,48000,SUV,6,Automatic,Petrol,White,Sharjah,Well maintained
+toyota,land cruiser,2019,220000,35000,SUV,8,Automatic,Petrol,White,Dubai,GCC spec full option
+nissan,sunny,2018,25000,95000,Sedan,4,Automatic,Petrol,Silver,Sharjah,Economical
+mazda,cx-5,2019,58000,42000,SUV,4,Automatic,Petrol,Red,Dubai,Single owner
+volkswagen,jetta,2019,40000,60000,Sedan,4,Automatic,Petrol,Black,Abu Dhabi,Good condition
+suzuki,swift,2018,22000,70000,Hatchback,4,Automatic,Petrol,White,Sharjah,Economical car
+toyota,camry,2021,58000,15000,Sedan,4,Automatic,Petrol,Black,Dubai,Almost new
+kia,rio,2019,26000,65000,Sedan,4,Automatic,Petrol,Silver,Dubai,Good condition
+hyundai,accent,2018,24000,85000,Sedan,4,Automatic,Petrol,White,Abu Dhabi,Reliable car
+nissan,patrol,2018,150000,60000,SUV,8,Automatic,Petrol,Grey,Dubai,GCC spec
+honda,cr-v,2020,68000,30000,SUV,4,Automatic,Petrol,Black,Dubai,Full option
+bmw,x5,2019,175000,40000,SUV,6,Automatic,Petrol,White,Dubai,GCC spec
+mercedes,glc,2020,145000,25000,SUV,4,Automatic,Petrol,Black,Dubai,Agency serviced
