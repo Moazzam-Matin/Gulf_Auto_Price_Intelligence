@@ -34,7 +34,7 @@ graph TD
 
     style A fill:#f9f,stroke:#333,stroke-width:2px
     style H fill:#bbf,stroke:#333,stroke-width:2px
-
+```
 
 ## A Real Bug I Found and Fixed: Target Leakage
 
@@ -146,6 +146,8 @@ Performance varies significantly by price segment — error as a percentage is m
 ## Acknowledgements
 
 Thanks to the Kaggle community for the UAE market dataset.
+
+```
 
 ```
 
