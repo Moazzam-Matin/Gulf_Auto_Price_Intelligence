@@ -32,8 +32,8 @@ graph TD
     F --> G["FastAPI /predict: Pydantic-validated HTTP"]
     G --> H["Docker container: built & verified in CI"]
 
-    style A fill:#f9f,stroke:#333,stroke-width:2px
-    style H fill:#bbf,stroke:#333,stroke-width:2px
+    style A fill:#1f294b,stroke:#333,stroke-width:2px
+    style H fill:#064e3b,stroke:#333,stroke-width:2px
 ```
 
 ## A Real Bug I Found and Fixed: Target Leakage
