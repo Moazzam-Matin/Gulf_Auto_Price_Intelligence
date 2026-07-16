@@ -16,27 +16,25 @@ Every push to this repo triggers an automated pipeline (see `.github/workflows/c
 
 See it running under the [Actions tab](https://github.com/Moazzam-Matin/Gulf_Auto_Price_Intelligence/actions).
 
-````markdown
 ## Architecture
 
 ```mermaid
 graph TD
-    A[Raw CSV: UAE car listings] --> B(clean_data: handles dirty data)
-    B --> C(train_test_split: split BEFORE encoding)
+    A["Raw CSV: UAE car listings"] --> B("clean_data(): handles dirty data")
+    B --> C("train_test_split(): split BEFORE encoding")
 
-    C --> D[fit_target_encoding: learned only from train]
-    C --> E[apply_target_encoding: applied to train & test]
+    C --> D["fit_target_encoding(): learned only from train"]
+    C --> E["apply_target_encoding(): applied to train & test"]
 
-    D --> F[RandomForestRegressor: tracked via MLflow]
+    D --> F["RandomForestRegressor: tracked via MLflow"]
     E --> F
 
-    F --> G[FastAPI /predict: Pydantic-validated HTTP]
-    G --> H[Docker container: built & verified in CI]
+    F --> G["FastAPI /predict: Pydantic-validated HTTP"]
+    G --> H["Docker container: built & verified in CI"]
 
     style A fill:#f9f,stroke:#333,stroke-width:2px
     style H fill:#bbf,stroke:#333,stroke-width:2px
-```
-````
+
 
 ## A Real Bug I Found and Fixed: Target Leakage
 
@@ -148,6 +146,8 @@ Performance varies significantly by price segment — error as a percentage is m
 ## Acknowledgements
 
 Thanks to the Kaggle community for the UAE market dataset.
+
+```
 
 ```
 
