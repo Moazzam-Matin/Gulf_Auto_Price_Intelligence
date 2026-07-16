@@ -146,11 +146,3 @@ Performance varies significantly by price segment — error as a percentage is m
 ## Acknowledgements
 
 Thanks to the Kaggle community for the UAE market dataset.
-
-```
-
-```
-
-```
-
-```
