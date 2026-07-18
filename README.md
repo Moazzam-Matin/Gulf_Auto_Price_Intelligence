@@ -134,12 +134,20 @@ Then open `http://127.0.0.1:8000/docs`.
 - **MAE:** ~46,650 AED
 - **R²:** ~0.50
 
-Performance varies significantly by price segment — error as a percentage is much higher for cheaper cars than luxury ones, since a fixed AED error matters more on a lower base price. (Segment-level evaluation breakdown via `evaluate.py` — in progress.)
+Performance varies significantly by price segment — measured via `evaluate.py`:
+
+| Price Range   | MAPE  | MAE         | Notes                                                                      |
+| ------------- | ----- | ----------- | -------------------------------------------------------------------------- |
+| 0-50K AED     | 96.1% | ~26,800 AED | Error is nearly as large as the car's value - not reliable at this segment |
+| 50K-150K AED  | 34.3% | ~29,600 AED | Best-performing segment                                                    |
+| 150K-400K AED | 38.4% | ~98,900 AED | Reasonable relative error despite larger absolute AED gaps                 |
+
+**Takeaway:** a single blended MAPE hides this — the model is genuinely useful for mid-range cars but not yet trustworthy for budget listings, most likely due to the missing "Spec" (GCC vs. Import) feature noted in the original research (`research.ipynb`).
 
 ## Roadmap
 
 - [ ] Deploy containerized API to AWS (ECS Fargate)
-- [ ] Segment-level evaluation report (`evaluate.py`)
+- [x] Segment-level evaluation report (`evaluate.py`)
 - [ ] Data/model versioning via DVC
 - [ ] Model monitoring for data drift
 
