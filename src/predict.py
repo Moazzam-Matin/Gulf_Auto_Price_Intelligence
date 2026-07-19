@@ -1,52 +1,31 @@
 import numpy as np
-import mlflow.sklearn
+import pandas as pd
 
-def predict_car_price(car_details):
-    """
-    Predict price for a car given its engineered features
-    
-    car_details: dict with preprocessed features
-    Returns: predicted price in AED
-    """
-    
-    # Load best model from MLflow (Run ID: 73a16f44d0c9412c8af27dbc78e1a11b)
-    model_uri = "runs:/73a16f44d0c9412c8af27dbc78e1a11b/random-forest-model"
-    model = mlflow.sklearn.load_model(model_uri)
-    
-    # Extract features in the correct order
-    features = np.array([[
-        car_details['Car_Age'],
-        car_details['Log_Mileage'],
-        car_details['Cylinders'],
-        car_details['Make_Encoded_Log'],
-        car_details['Model_Encoded_Log'],
-        car_details['Body Type_Encoded_Log']
-    ]])
-    
-    # Predict in log space
-    log_price = model.predict(features)[0]
-    
-    # Convert back to real AED
-    predicted_price = np.expm1(log_price)
-    
-    return predicted_price
+FEATURES = [
+    "Car_Age",
+    "Log_Mileage",
+    "Cylinders",
+    "Make_Encoded_Log",
+    "Model_Encoded_Log",
+    "Body Type_Encoded_Log",
+]
 
 
-if __name__ == "__main__":
-    # Example: Predict price for a Toyota Camry, 6 years old, 120K km
-    example_car = {
-        'Car_Age': 6,
-        'Log_Mileage': 11.70,  # log(120000)
-        'Cylinders': 4,
-        'Make_Encoded_Log': 11.32,  # Toyota average from encoding
-        'Model_Encoded_Log': 10.82,  # Camry average from encoding
-        'Body Type_Encoded_Log': 11.0  # Sedan average from encoding
-    }
-    
-    price = predict_car_price(example_car)
-    print(f"✅ Predicted Car Price: {price:,.0f} AED")
-    print(f"\nModel Used:")
-    print(f"  Run ID: 73a16f44d0c9412c8af27dbc78e1a11b")
-    print(f"  n_estimators: 100")
-    print(f"  max_depth: 10")
-    print(f"  R2 Score: 0.5206")
+def predict_price(model, mappings: dict, year: int, mileage: int, make: str,
+                   car_model: str, body_type: str, cylinders: float) -> float:
+
+    car_age = max(2026 - year, 1)
+    log_mileage = np.log1p(mileage)
+
+    global_mean = mappings["global_mean"]
+    make_enc = mappings["Make"].get(make, global_mean)
+    model_enc = mappings["Model"].get(car_model, global_mean)
+    body_enc = mappings["Body Type"].get(body_type, global_mean)
+
+    features = pd.DataFrame(
+        [[car_age, log_mileage, cylinders, make_enc, model_enc, body_enc]],
+        columns=FEATURES,
+    )
+
+    log_pred = model.predict(features)[0]
+    return round(float(np.expm1(log_pred)), -2)
