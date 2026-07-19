@@ -40,7 +40,7 @@ graph TD
 
 While building this pipeline, I discovered the initial version computed target encoding (average price per car Make/Model) **before** splitting the data into train/test sets. This let information from the test set quietly leak into the features the model was evaluated on.
 
-**Impact, measured directly:** fixing this changed MAPE from 52.3% (leaky, artificially optimistic) to 53.8% (honest). I wrote a regression test (`tests/test_preprocess.py::test_encoding_is_insensitive_to_test_row_values`) that fails if this leak is ever reintroduced — verified by deliberately feeding the encoding an extreme, unmistakable test-row value and asserting it has zero effect on the learned mapping.
+**Impact, measured directly:** fixing this changed MAPE from 52.3% (leaky, artificially optimistic) to 53.8% (honest) at the time of the fix, using the hyperparameters then in use. I wrote a regression test (`tests/test_preprocess.py::test_encoding_is_insensitive_to_test_row_values`) that fails if this leak is ever reintroduced — verified by deliberately feeding the encoding an extreme, unmistakable test-row value and asserting it has zero effect on the learned mapping. (See "Current Model Performance" below for numbers from the current, tuned model — hyperparameters have since changed slightly, so the exact figures differ from this historical comparison.)
 
 This is documented here deliberately: catching and fixing this kind of bug — and writing a test that prevents its return — is a core MLOps skill, not a footnote.
 
@@ -130,17 +130,19 @@ Then open `http://127.0.0.1:8000/docs`.
 
 ## Current Model Performance
 
-- **MAPE:** ~53.8% (honest, leakage-free)
-- **MAE:** ~46,650 AED
-- **R²:** ~0.50
+Hyperparameters: `n_estimators=100, max_depth=10` (selected via comparison across MLflow runs).
 
-Performance varies significantly by price segment — measured via `evaluate.py`:
+- **MAPE:** 53.51% (honest, leakage-free)
+- **MAE:** 46,412 AED
+- **R²:** 0.5023
+
+Performance varies significantly by price segment — measured via `evaluate.py`, which loads and evaluates the exact `model.pkl` the API serves (not a separately retrained copy, so these numbers can never drift from what's actually deployed):
 
 | Price Range   | MAPE  | MAE         | Notes                                                                      |
 | ------------- | ----- | ----------- | -------------------------------------------------------------------------- |
-| 0-50K AED     | 96.1% | ~26,800 AED | Error is nearly as large as the car's value - not reliable at this segment |
-| 50K-150K AED  | 34.3% | ~29,600 AED | Best-performing segment                                                    |
-| 150K-400K AED | 38.4% | ~98,900 AED | Reasonable relative error despite larger absolute AED gaps                 |
+| 0-50K AED     | 95.6% | ~26,600 AED | Error is nearly as large as the car's value - not reliable at this segment |
+| 50K-150K AED  | 34.2% | ~29,600 AED | Best-performing segment                                                    |
+| 150K-400K AED | 38.1% | ~98,200 AED | Reasonable relative error despite larger absolute AED gaps                 |
 
 **Takeaway:** a single blended MAPE hides this — the model is genuinely useful for mid-range cars but not yet trustworthy for budget listings, most likely due to the missing "Spec" (GCC vs. Import) feature noted in the original research (`research.ipynb`).
 
