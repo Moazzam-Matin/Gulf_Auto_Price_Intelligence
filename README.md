@@ -125,7 +125,7 @@ Then open `http://127.0.0.1:8000/docs`.
 
 ## Data Source
 
-- **Source:** [Kaggle - UAE Used Car Prices](https://www.kaggle.com/datasets/aliiihussain/car-price-prediction/data)
+- **Source:** [Kaggle - UAE Used Car Prices](https://www.kaggle.com/datasets/mohamedsaad254/uae-used-cars-analysis-full-project-v1-0)
 - Raw data is gitignored (standard practice — don't commit data to a code repo). Download it and place it at `data/raw/uae_used_cars_10k.csv` to train locally.
 
 ## Current Model Performance
