@@ -1,4 +1,7 @@
 ![CI](https://github.com/Moazzam-Matin/Gulf_Auto_Price_Intelligence/actions/workflows/ci.yml/badge.svg)
+![Python](https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat&logo=docker&logoColor=white)
+![MLflow](https://img.shields.io/badge/MLflow-0073B7?style=flat&logo=mlflow&logoColor=white)
 
 # Gulf Auto Price Intelligence 🚗
 
